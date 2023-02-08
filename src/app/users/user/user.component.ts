@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs-compat';
 
 @Component({
   selector: 'app-user',
@@ -8,6 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class UserComponent implements OnInit {
   user: {id: number, name: string};
+  paramsSubscriptions: Subscription;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -23,6 +25,11 @@ export class UserComponent implements OnInit {
         this.user.name = params['name'];
       },
     );
+  }
+
+  ngOnDestroied()
+  {
+    this.paramsSubscriptions.unsubscribe();
   }
 
 }
